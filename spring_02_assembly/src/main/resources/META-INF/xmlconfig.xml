@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:c="http://www.springframework.org/schema/c"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <bean id="lover" class="soundsystem.xmlconfig.impls.Lover"/>
+
+    <!-- 构造器注入 -->
+    <!-- <bean id="compactDisc" class="soundsystem.xmlconfig.impls.BlankDisc">
+        <constructor-arg value="年少有为"/>
+        <constructor-arg value="李荣浩"/>
+    </bean> -->
+
+    <!-- c命名空间，与 constructor-arg效果一样 -->
+    <bean id="blankDisc"
+          class="soundsystem.xmlconfig.impls.BlankDisc"
+          c:title="年少有为"
+          c:artist="李荣浩"/>
+
+    <!-- <bean id="compactDisc" class="soundsystem.xmlconfig.impls.BlankDisc"
+        c:_0="年少有为" c:_1="李荣浩"/> -->
+
+    <bean id="jjlin" class="soundsystem.xmlconfig.impls.collection.BlankDisc">
+        <constructor-arg value="和自己对话"/>
+        <constructor-arg value="林俊杰"/>
+        <constructor-arg>
+            <list>
+                <value>不为谁而作的歌</value>
+                <value>too bad</value>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <!-- <bean id="compactDisc" class="soundsystem.xmlconfig.impls.collection.BlankDisc"
+        c:_0="和自己对话" c:_1="林俊杰">
+        <constructor-arg>
+            <list>
+                <value>不为谁而作的歌</value>
+                <value>too bad</value>
+            </list>
+        </constructor-arg>
+    </bean> -->
+
+
+    <!-- 属性注入 -->
+    <!-- <bean id="compactDisc" class="soundsystem.xmlconfig.impls.properties.BlankDisc">
+        <property name="title" value="和自己对话"/>
+        <property name="artist" value="林俊杰"/>
+        <property name="tracks">
+            <list>
+                <value>不为谁而作的歌</value>
+                <value>too bad</value>
+            </list>
+        </property>
+    </bean> -->
+
+    <!-- p命名空间 -->
+    <!-- <bean id="compactDisc" class="soundsystem.xmlconfig.impls.properties.BlankDisc"
+        p:title="和自己对话" p:artist="林俊杰">
+        <property name="tracks">
+            <list>
+                <value>不为谁而作的歌</value>
+                <value>too bad</value>
+            </list>
+        </property>
+    </bean> -->
+
+
+    <!-- <bean id="compactDisc" class="soundsystem.xmlconfig.impls.properties.BlankDisc"
+        p:title="和自己对话" p:artist="林俊杰" p:tracks-ref="trackList"/>
+
+    <util:list id="trackList">
+        <value>不为谁而作的歌</value>
+        <value>too bad</value>
+    </util:list> -->
+
+
+
+    <!-- 构造器注入 -->
+<!--    <bean id="cdPlayer" class="soundsystem.xmlconfig.impls.CDPlayer">-->
+<!--        <constructor-arg ref="compactDisc"/>-->
+<!--        &lt;!&ndash; <property name="cd" ref="compactDisc"/> &ndash;&gt;-->
+<!--    </bean>-->
+    <!-- c命名空间 -->
+    <!-- cd是构造方法参数名 -->
+<!--     <bean id="cdPlayer" class="soundsystem.xmlconfig.impls.CDPlayer"-->
+<!--           c:cd-ref="compactDisc"/>-->
+
+    <!-- _0表示构造方法的第一个参数，多个参数则依次是c:_1-ref、c:_2-ref... -->
+     <bean id="cdPlayer" class="soundsystem.xmlconfig.impls.CDPlayer"
+           c:_0-ref="jjlin"/>
+
+    <!-- 构造方法只有一个参数时 -->
+<!--     <bean id="cdPlayer" class="soundsystem.xmlconfig.impls.CDPlayer" -->
+<!--           c:_-ref="compactDisc"/> -->
+
+
+    <!-- 属性注入 -->
+    <!-- <bean id="cdPlayer" class="soundsystem.xmlconfig.impls.properties.CDPlayer">
+        <property name="cd" ref="compactDisc"/>
+    </bean> -->
+
+    <!-- p命名空间 -->
+    <!-- <bean id="cdPlayer" class="soundsystem.xmlconfig.impls.properties.CDPlayer"
+        p:cd-ref="compactDisc"/> -->
+
+
+</beans>
