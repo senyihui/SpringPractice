@@ -58,6 +58,13 @@
         </dependency>
 
         <dependency>
+            <groupId>com.github.stefanbirkner</groupId>
+            <artifactId>system-rules</artifactId>
+            <version>1.19.0</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>3.1</version>
@@ -66,6 +73,7 @@
     </dependencies>
     <modules>
         <module>spring_01_knight</module>
+        <module>spring_02_assembly</module>
     </modules>
 
 
