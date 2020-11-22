@@ -76,6 +76,7 @@
         <module>spring_01_knight</module>
         <module>spring_02_assembly</module>
         <module>spring_03_advanced</module>
+        <module>spring_04_aop</module>
     </modules>
 
 
