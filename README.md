@@ -182,8 +182,51 @@ public class Audience {
 
 简而言之，Spring不能像之前那样使用<bean>声明来创建一个CriticAspect实例——它已经在运行时由AspectJ创建完成了。Spring需要通过aspectOf()工厂方法获得切面的引用，然后像<bean>元素规定的那样在该对象上执行依赖注入。
 
+## chp5 简单MVC
+我们所编写的控制器将会带有@Controller注解，这会使其成为组件扫描时的候选bean。因此，我们不需要在配置类中显式声明任何的控制器。
+
+在Spring MVC中，控制器只是方法上添加了@RequestMapping注解的类，这个注解声明了它们所要处理的请求。
+
+你可以看到，home()方法其实并没有做太多的事情：它返回了一个String类型的“home”。这个String将会被Spring MVC解读为要渲染的视图名称。DispatcherServlet会要求视图解析器将这个逻辑名称解析为实际的视图。
+
+### 定义类级别的请求处理
+处理器方法上的@RequestMapping注解会对类级别上的@RequestMapping的声明进行补充。
+
+*image*
+
+现在，HomeController的home()方法能够映射到对“/”和“/homepage”的GET请求
+
+Model实际上就是一个Map（也就是key-value对的集合），它会传递给视图，这样数据就能渲染到客户端了。
+
+*code*
+这个版本与其他的版本有些差别。它并没有返回视图名称，也没有显式地设定模型，这个方法返回的是Spittle列表。当处理器方法像这样返回对象或集合时，这个值会放到模型中，模型的key会根据其类型推断得出（在本例中，也就是spittleList）。
+
+### 接受请求的输入
+Spring MVC允许以多种方式将客户端中的数据传送到控制器的处理器方法中，包括：
+* 查询参数（Query Parameter）
+* 路径变量（Path Variable）
+* 表单参数（Form Parameter）
+
+这个处理器方法将会处理形如“/spittles/show?spittle_id=12345”这样的请求。尽管这也可以正常工作，但是从面向资源的角度来看这并不理想。在理想情况下，要识别的资源（Spittle）应该通过URL路径进行标示，而不是通过查询参数。对“/spittles/12345”发起GET请求要优于对“/spittles/show?spittle_id=12345”发起请求。前者能够识别出要查询的资源，而后者描述的是带有参数的一个操作——本质上是通过HTTP发起的RPC。
+
+为了实现这种路径变量，Spring MVC允许我们在@RequestMapping路径中添加占位符。占位符的名称要用大括号（“{”和“}”）括起来。路径中的其他部分要与所处理的请求完全匹配，但是占位符部分可以是任意的值。
+
+如果方法的参数名碰巧与占位符的名称相同，因此我们可以去掉@PathVariable中的value属性
+
+
+
 ## 注意事项
 
 ***千万注意`@ComponentScan`中`basePackages`的路径！！***
 
 **Resource 文件夹中的文件要手动重新创建，不要复制黏贴**
+
+maven can't solve, 下载不了jar包，考虑:
+
+配置中央仓库为阿里云
+     <mirror>  
+      <id>alimaven</id> 
+      <mirrorOf>central</mirrorOf> 
+      <name>aliyun maven</name>  
+      <url>http://maven.aliyun.com/nexus/content/groups/public/</url>;           
+     </mirror>
