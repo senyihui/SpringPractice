@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+	">
+	
+	<bean id="performance" class="PACKAGE_NAME.SingPerformance"/>
+	
+	<!-- <aop:config>
+		<aop:aspect>
+			<aop:declare-parents types-matching="PACKAGE_NAME.Performance+" 
+			implement-interface="PACKAGE_NAME.xmlconfig.Encoreable"
+			default-impl="PACKAGE_NAME.xmlconfig.DefaultEncoreable"/>
+		</aop:aspect>
+	</aop:config> -->
+	
+	<!-- 等同于上面 -->
+	<bean id="encoreable" class="PACKAGE_NAME.xmlconfig.DefaultEncoreable"/>
+	<aop:config>
+		<aop:aspect>
+			<aop:declare-parents types-matching="PACKAGE_NAME.Performance+" 
+			implement-interface="PACKAGE_NAME.xmlconfig.Encoreable"
+			delegate-ref="encoreable"/>
+		</aop:aspect>
+	</aop:config>
+
+</beans>

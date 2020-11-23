@@ -12,6 +12,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spring.version>5.2.9.RELEASE</spring.version>
+<!--        <spring.version>4.3.9.RELEASE</spring.version>-->
         <aspectj.version>1.9.6</aspectj.version>
     </properties>
 
@@ -74,6 +75,8 @@
     <modules>
         <module>spring_01_knight</module>
         <module>spring_02_assembly</module>
+        <module>spring_03_advanced</module>
+        <module>spring_04_aop</module>
     </modules>
 
 
