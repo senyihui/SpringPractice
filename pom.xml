@@ -78,6 +78,7 @@
         <module>spring_03_advanced</module>
         <module>spring_04_aop</module>
         <module>spring_05_simpleMVC</module>
+        <module>spring_06_webview</module>
     </modules>
 
 
