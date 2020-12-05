@@ -3,7 +3,17 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/spring_01_knight/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/spring_01_knight/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spring_02_assembly/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spring_02_assembly/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spring_03_advanced/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spring_03_advanced/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spring_04_aop/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spring_04_aop/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spring_05_simpleMVC/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spring_05_simpleMVC/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spring_06_webview/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spring_06_webview/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spring_10_jdbc/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spring_10_jdbc/src/main/resources" charset="UTF-8" />
   </component>
 </project>
