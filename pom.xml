@@ -80,6 +80,8 @@
         <module>spring_05_simpleMVC</module>
         <module>spring_06_webview</module>
         <module>spring_10_jdbc</module>
+        <module>spring_11_hibernate</module>
+        <module>spring_11_jpa</module>
     </modules>
 
 

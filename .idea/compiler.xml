@@ -10,7 +10,9 @@
         <module name="spring_06_webview" />
         <module name="spring_05_simpleMVC" />
         <module name="spring_10_jdbc" />
+        <module name="spring_11_jpa" />
         <module name="spring_04_aop" />
+        <module name="spring_11_hibernate" />
         <module name="spring_02_assembly" />
         <module name="spring_01_knight" />
       </profile>

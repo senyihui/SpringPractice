@@ -15,5 +15,9 @@
     <file url="file://$PROJECT_DIR$/spring_06_webview/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/spring_10_jdbc/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/spring_10_jdbc/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spring_11_hibernate/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spring_11_hibernate/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spring_11_jpa/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spring_11_jpa/src/main/resources" charset="UTF-8" />
   </component>
 </project>
