@@ -82,6 +82,9 @@
         <module>spring_10_jdbc</module>
         <module>spring_11_hibernate</module>
         <module>spring_11_jpa</module>
+        <module>spring_12_mongodb</module>
+        <module>spring_12_redis</module>
+        <module>spring_13_caching</module>
     </modules>
 
 

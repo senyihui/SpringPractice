@@ -288,6 +288,55 @@ Hibernate是在开发者社区很流行的开源持久化框架。它不仅提�
 
 当Spring Data JPA为Repository接口生成实现的时候，它还会查找名字与接口相同，并且添加了Impl后缀的一个类。如果这个类存在的话，Spring Data JPA将会把它的方法与Spring Data JPA所生成的方法合并在一起。对于SpitterRepository接口而言，要查找的类名为SpitterRepositoryImpl。
 
+# chp12 使用NoSQL数据库
+
+## MongoDB
+
+MongoDB是最为流行的开源文档数据库之一。Spring Data MongoDB提供了三种方式在Spring应用中使用MongoDB：
+
+* 通过注解实现对象-文档映射；
+* 使用MongoTemplate实现基于模板的数据库访问；
+* 自动化的运行时Repository生成功能。
+
+ 为了访问需要认证的MongoDB服务器，MongoClient在实例化的时候必须要有一个MongoCredential的列表。在程序清单12.3中，我们为此创建了一个MongoCredential。为了将凭证信息的细节放在配置类外边，它们是通过注入的Environment对象解析得到的。
+
+@Document和@Id注解类似于JPA的@Entity和@Id注解。我们将会经常使用这两个注解，对于要以文档形式保存到MongoDB数据库的每个Java类型都会使用这两个注解
+
+我们可以看到，Order类添加了@Document注解，这样它就能够借助MongoTemplate或自动生成的Repository进行持久化。其id属性上使用了@Id注解，用来指定它作为文档的ID。除此之外，customer属性上使用了@Field注解，这样的话，当文档持久化的时候customer属性将会映射为名为client的域
+
+并且如果我们不使用@Field注解进行设置的话，那么文档域中的名字将会与对应的Java属性相同。
+
+![image-20201206142004728](images/image-20201206142004728.png)
+
+## Neo4j
+
+文档型数据库会将数据存储到粗粒度的文档中，而图数据库会将数据存储到多个细粒度的节点中，这些节点之间通过关系建立关联。图数据库中的一个节点通常会对应数据库中的一个概念（concept），它会具备描述节点状态的属性。连接两个节点的关联关系可能也会带有属性。
+
+## Redis
+
+Redis是一种特殊类型的数据库，它被称之为key-value存储。顾名思义，key-value存储保存的是键值对。实际上，key-value存储与哈希Map有很大的相似性。可以不太夸张地说，它们就是持久化的哈希Map。
+
+# chp13 启用对缓存的支持
+
+Spring对缓存的支持有两种方式：
+
+* 注解驱动的缓存
+* XML声明的缓存
+
+使用Spring的缓存抽象时，最为通用的方式就是在方法上添加`@Cacheable`和`@CacheEvict`注解。
+
+## 填充缓存
+
+我们可以看到，`@Cacheable`和`@CachePut`注解都可以填充缓存，但是它们的工作方式略有差异。
+
+`@Cacheable`首先在缓存中查找条目，如果找到了匹配的条目，那么就不会对方法进行调用了。如果没有找到匹配的条目，方法会被调用并且返回值要放到缓存之中。而`@CachePut`并不会在缓存中检查匹配的值，目标方法总是会被调用，并将返回值添加到缓存之中。
+
+与`@Cacheable`和`@CachePut`不同，`@CacheEvict`能够应用在返回值为void的方法上，而`@Cacheable`和`@CachePut`需要非void的返回值，它将会作为放在缓存中的条目。因为`@CacheEvict`只是将条目从缓存中移除，因此它可以放在任意的方法上，甚至void方法。
+
+## 小结
+
+在这个过程中，我们讨论了缓存实际上是一种面向切面的行为。Spring将缓存实现为一个切面。在使用XML声明缓存规则时，这一点非常明显：我们必须要将缓存通知绑定到一个切点上。
+
 ## 注意事项
 
 ***千万注意`@ComponentScan`中`basePackages`的路径！！***
