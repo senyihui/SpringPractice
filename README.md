@@ -337,6 +337,21 @@ Spring对缓存的支持有两种方式：
 
 在这个过程中，我们讨论了缓存实际上是一种面向切面的行为。Spring将缓存实现为一个切面。在使用XML声明缓存规则时，这一点非常明显：我们必须要将缓存通知绑定到一个切点上。
 
+# chp14 保护方法应用
+
+在Spring Security中实现方法级安全性的最常见办法是使用特定的注解，将这些注解应用到需要保护的方法上。这样有几个好处，最重要的是当我们在编辑器中查看给定的方法时，能够很清楚地看到它的安全规则。
+
+Spring Security提供了三种不同的安全注解：
+
+* Spring Security自带的@Secured注解；
+* JSR-250的@RolesAllowed注解；
+* 表达式驱动的注解，包括@PreAuthorize、@PostAuthorize、@PreFilter和@PostFilter
+
+@Secured注解会使用一个String数组作为参数。每个String值是一个权限，调用这个方法至少需要具备其中的一个权限。通过传递进来ROLE_SPITTER，我们告诉Spring Security只允许具有ROLE_SPITTER权限的认证用户才能调用addSpittle ()方法
+
+但是，@PreAuthorize的功能并不限于这个简单例子所展现的。@PreAuthorize的String类型参数是一个SpEL表达式。借助于SpEL表达式来实现访问决策，我们能够编写出更高级的安全性约束。例如，Spittr应用程序的一般用户只能写140个字以内的Spittle，而付费用户不限制字数
+
+
 ## 注意事项
 
 ***千万注意`@ComponentScan`中`basePackages`的路径！！***

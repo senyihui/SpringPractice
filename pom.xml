@@ -85,6 +85,7 @@
         <module>spring_12_mongodb</module>
         <module>spring_12_redis</module>
         <module>spring_13_caching</module>
+        <module>spring_14_methodSecurity</module>
     </modules>
 
 
