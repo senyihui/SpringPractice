@@ -351,6 +351,77 @@ Spring Security提供了三种不同的安全注解：
 
 但是，@PreAuthorize的功能并不限于这个简单例子所展现的。@PreAuthorize的String类型参数是一个SpEL表达式。借助于SpEL表达式来实现访问决策，我们能够编写出更高级的安全性约束。例如，Spittr应用程序的一般用户只能写140个字以内的Spittle，而付费用户不限制字数
 
+## chp15 使用远程服务
+作为一个Java开发者，我们有多种可以使用的远程调用技术，包括：
+
+* 远程方法调用（Remote Method Invocation，RMI）
+* Caucho的Hessian和Burlap；
+* Spring基于HTTP的远程服务；
+* 使用JAX-RPC和JAX-WS的Web Service
+
+远程调用是客户端应用和服务端之间的会话。在客户端，它所需要的一些功能并不在该应用的实现范围之内，所以应用要向能提供这些功能的其他系统寻求帮助。而远程应用通过远程服务暴露这些功能。
+
+图15.1
+
+在所有的模型中，服务都作为Spring所管理的bean配置到我们的应用中。这是通过一个代理工厂bean实现的，这个bean能够把远程服务像本地对象一样装配到其他bean的属性中去。图15.2展示了它是如何工作的。
+
+图15.2
+
+在服务器端，我们可以使用表15.1所列出的任意一种模型将Spring管理的bean发布为远程服务。图15.3展示了远程导出器（remote exporter）如何将bean方法发布为远程服务。
+
+图15.3
+
+## RMI
+RmiServiceExporter可以把任意Spring管理的bean发布为RMI服务。如图15.4所示，RmiServiceExporter把bean包装在一个适配器类中，然后适配器类被绑定到RMI注册表中，并且代理到服务类的请求——在本例中服务类也就是SpitterServiceImpl。
+
+图15.4
+
+Spring的RmiProxyFactoryBean是一个工厂bean，该bean可以为RMI服务创建代理。使用RmiProxyFactoryBean引用SpitterService的RMI服务是非常简单的，只需要在客户端的Spring配置中增加如下的@Bean方法
+
+服务的URL是通过RmiProxyFactoryBean的serviceUrl属性来设置的，在这里，服务名被设置为SpitterService，并且声明服务是在本地机器上的；同时，服务提供的接口由serviceInterface属性来指定。图15.5展示了客户端和RMI代理的交互。
+
+图15.5
+
+RMI是一种实现远程服务交互的好办法，但是它存在某些限制。首先，RMI很难穿越防火墙，这是因为RMI使用任意端口来交互——这是防火墙通常所不允许的。在企业内部网络环境中，我们通常不需要担心这个问题。但是如果在互联网上运行，我们用RMI可能会遇到麻烦。即使RMI提供了对HTTP的通道的支持（通常防火墙都允许），但是建立这个通道也不是件容易的事。
+
+## 使用Hessian和Burlap发布远程服务
+Caucho Technology（Resin应用服务器背后的公司）开发了一套应对RMI限制的远程调用解决方案。实际上，Caucho提供了两种解决方案：Hessian和Burlap。
+
+## 使用Spring的HttpInvoker
+HTTP invoker是一个新的远程调用模型，作为Spring框架的一部分，能够执行基于HTTP的远程调用（让防火墙不为难），并使用Java的序列化机制（让开发者也乐观其变）。使用基于HTTP invoker的服务和使用基于Hessian/Burlap的服务非常相似。
+
+要记住HTTP invoker有一个重大的限制：它只是一个Spring框架所提供的远程调用解决方案。这意味着客户端和服务端必须都是Spring应用。并且，至少目前而言，也隐含表明客户端和服务端必须是基于Java的。另外，因为使用了Java的序列化机制，客户端和服务端必须使用相同版本的类（与RMI类似）。
+
+## 在Spring中创建JAX-WS Web服务
+
+# chp16 使用Spring MVC创建REST API
+
+## REST基础知识
+
+REST与RPC几乎没有任何关系。RPC是面向服务的，并关注于行为和动作；而REST是面向资源的，强调描述应用程序的事物和名词。
+
+为了理解REST是什么，我们将它的首字母缩写拆分为不同的构成部分：
+
+* 表述性（Representational）：REST资源实际上可以用各种形式来进行表述，包括XML、JSON（JavaScript Object Notation）甚至HTML——最适合资源使用者的任意形式；
+* 状态（State）：当使用REST的时候，我们更关注资源的状态而不是对资源采取的行为；
+* 转移（Transfer）：REST涉及到转移资源数据，它以某种表述性形式从一个应用转移到另一个应用
+
+更简洁地讲，REST就是将资源的状态以最适合客户端或服务端的形式从服务器端转移到客户端（或者反过来）。
+
+REST中会有行为，它们是通过HTTP方法来定义的。具体来讲，也就是GET、POST、PUT、DELETE、PATCH以及其他的HTTP方法构成了REST中的动作。这些HTTP方法通常会匹配为如下的CRUD动作：
+
+* Create：POST
+* Read：GET
+* Update：PUT/PATCH
+* Delete：DELETE
+
+Spring提供了两种方法将资源的Java表述形式转换为发送给客户端的表述形式：
+ 
+* 内容协商（Content negotiation）：选择一个视图，它能够将模型渲染为呈现给客户端的表述形式
+
+* 消息转换器（Message conversion）：通过一个消息转换器将控制器所返回的对象转换为呈现给客户端的表述形式
+@ResponseBody注解会告知Spring，我们要将返回的对象作为资源发送给客户端，并将其转换为客户端可接受的表述形式。
+如果在控制器类上使用@RestController来代替@Controller的话，Spring将会为该控制器的所有处理方法应用消息转换功能。我们不必为每个方法都添加@ResponseBody了。
 
 ## 注意事项
 
