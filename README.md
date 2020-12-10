@@ -351,7 +351,8 @@ Spring Security提供了三种不同的安全注解：
 
 但是，@PreAuthorize的功能并不限于这个简单例子所展现的。@PreAuthorize的String类型参数是一个SpEL表达式。借助于SpEL表达式来实现访问决策，我们能够编写出更高级的安全性约束。例如，Spittr应用程序的一般用户只能写140个字以内的Spittle，而付费用户不限制字数
 
-## chp15 使用远程服务
+# chp15 使用远程服务
+
 作为一个Java开发者，我们有多种可以使用的远程调用技术，包括：
 
 * 远程方法调用（Remote Method Invocation，RMI）
@@ -361,26 +362,26 @@ Spring Security提供了三种不同的安全注解：
 
 远程调用是客户端应用和服务端之间的会话。在客户端，它所需要的一些功能并不在该应用的实现范围之内，所以应用要向能提供这些功能的其他系统寻求帮助。而远程应用通过远程服务暴露这些功能。
 
-图15.1
+![image-20201210200250369](images/image-20201210200250369.png)
 
 在所有的模型中，服务都作为Spring所管理的bean配置到我们的应用中。这是通过一个代理工厂bean实现的，这个bean能够把远程服务像本地对象一样装配到其他bean的属性中去。图15.2展示了它是如何工作的。
 
-图15.2
+![image-20201210200259674](images/image-20201210200259674.png)
 
 在服务器端，我们可以使用表15.1所列出的任意一种模型将Spring管理的bean发布为远程服务。图15.3展示了远程导出器（remote exporter）如何将bean方法发布为远程服务。
 
-图15.3
+![image-20201210200310185](images/image-20201210200310185.png)
 
 ## RMI
 RmiServiceExporter可以把任意Spring管理的bean发布为RMI服务。如图15.4所示，RmiServiceExporter把bean包装在一个适配器类中，然后适配器类被绑定到RMI注册表中，并且代理到服务类的请求——在本例中服务类也就是SpitterServiceImpl。
 
-图15.4
+![image-20201210200322100](images/image-20201210200322100.png)
 
 Spring的RmiProxyFactoryBean是一个工厂bean，该bean可以为RMI服务创建代理。使用RmiProxyFactoryBean引用SpitterService的RMI服务是非常简单的，只需要在客户端的Spring配置中增加如下的@Bean方法
 
 服务的URL是通过RmiProxyFactoryBean的serviceUrl属性来设置的，在这里，服务名被设置为SpitterService，并且声明服务是在本地机器上的；同时，服务提供的接口由serviceInterface属性来指定。图15.5展示了客户端和RMI代理的交互。
 
-图15.5
+![image-20201210200336027](images/image-20201210200336027.png)
 
 RMI是一种实现远程服务交互的好办法，但是它存在某些限制。首先，RMI很难穿越防火墙，这是因为RMI使用任意端口来交互——这是防火墙通常所不允许的。在企业内部网络环境中，我们通常不需要担心这个问题。但是如果在互联网上运行，我们用RMI可能会遇到麻烦。即使RMI提供了对HTTP的通道的支持（通常防火墙都允许），但是建立这个通道也不是件容易的事。
 
@@ -416,7 +417,7 @@ REST中会有行为，它们是通过HTTP方法来定义的。具体来讲，也
 * Delete：DELETE
 
 Spring提供了两种方法将资源的Java表述形式转换为发送给客户端的表述形式：
- 
+
 * 内容协商（Content negotiation）：选择一个视图，它能够将模型渲染为呈现给客户端的表述形式
 
 * 消息转换器（Message conversion）：通过一个消息转换器将控制器所返回的对象转换为呈现给客户端的表述形式
@@ -453,7 +454,7 @@ Java消息服务（Java Message Service ，JMS）是一个Java标准，定义了
 
 AMQP的生产者并不会直接将消息发布到队列中。AMQP在消息的生产者以及传递信息的队列之间引入了一种间接的机制：Exchange。这种关系如图17.8所示。
 
-图17.8
+![image-20201210200420165](images/image-20201210200420165.png)
 
 # chp18 使用WebSocket和STOMP实现消息功能
 
