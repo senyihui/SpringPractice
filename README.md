@@ -469,8 +469,27 @@ Spring 4.0为WebSocket通信提供了支持，包括：
 
 # chp19 使用Spring发送Email
 
+# chp20　使用JMX管理Spring Bean
+Spring对DI的支持是通过在应用中配置bean属性，这是一种非常不错的方法。不过，一旦应用已经部署并且正在运行，单独使用DI并不能帮助我们改变应用的配置。假设我们希望深入了解正在运行的应用并要在运行时改变应用的配置，此时，就可以使用Java管理扩展（Java Manage- ment Extensions，JMX）了。
 
+JMX这项技术能够让我们管理、监视和配置应用。这项技术最初作为Java的独立扩展，从Java 5开始，JMX已经成为标准的组件。
 
+使用JMX管理应用的核心组件是托管bean（managed bean，MBean）。所谓的MBean就是暴露特定方法的JavaBean，这些方法定义了管理接口。
+
+Spring的MBeanExporter是将Spring Bean转变为MBean的关键。MBeanExporter可以把一个或多个Spring bean导出为MBean服务器（MBean server）内的模型 MBean。MBean服务器（有时候也被称为MBean代理）是MBean生存的容器。对MBean的访问，也是通过MBean服务器来实现的。
+
+如图20.1所示，将Spring bean导出为JMX MBean之后，可以使用基于JMX的管理工具（例如JConsole或者VisualVM）查看正在运行的应用程序，显示bean的属性并调用bean的方法。
+
+图20.1
+
+# chp21 借助Spring Boot简化Spring开发
+
+在Spring家族中，Spring Boot是令人兴奋（也许我敢说它是改变游戏规则的）的新项目。它提供了四个主要的特性，能够改变开发Spring应用程序的方式：
+
+* Spring Boot Starter：它将常用的依赖分组进行了整合，将其合并到一个依赖中，这样就可以一次性添加到项目的Maven或Gradle构建中；
+* 自动配置：Spring Boot的自动配置特性利用了Spring 4对条件化配置的支持，合理地推测应用所需的bean并自动化配置它们；
+* 命令行接口（Command-line interface，CLI）：Spring Boot的CLI发挥了Groovy编程语言的优势，并结合自动配置进一步简化Spring应用的开发；
+* Actuator：它为Spring Boot应用添加了一定的管理特性。
 
 
 
